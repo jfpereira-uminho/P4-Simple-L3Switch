@@ -28,9 +28,7 @@ In this task, you will extend the existing Mininet topology from a single-router
 ## Instructions
 1. **Modify mininet topology:**
 2. **Modify the Flow Rules:**
-   - Update the flow rules for both `r1` and `r2` to handle the following routes:
-     - `r1`: Forward packets between `h1` (`10.0.1.0/24`) and `r2` (`10.0.3.0/24`).
-     - `r2`: Forward packets between `r1` (`10.0.3.0/24`) and `h2` (`10.0.2.0/24`).
+   - Update the flow rules for both `r1` and `r2` to handle the new routes.
 
 ### Compile P4
 ```bash
