@@ -20,7 +20,7 @@ In this task, you will extend the existing Mininet topology from a single-router
 |           | `r2-eth2`   | `10.0.2.254/24`  | `bb:00:00:00:00:02`    |
 | **h2**    | `h2-eth0`   | `10.0.2.1/24`    | `00:04:00:00:00:02`    |
 
-### Key Notes
+## Key Notes
 - **No P4 Code Changes Required:** The provided P4 program for `r1` and `r2` remains the same (simple Layer 3 forwarding).
 - **ARP Configuration:** ARP tables and default routes for hosts are pre-configured by the Mininet script.
 - **Separate Flow Rules:** Each router (`r1` and `r2`) requires its own set of flow rules.
@@ -32,14 +32,26 @@ In this task, you will extend the existing Mininet topology from a single-router
      - `r1`: Forward packets between `h1` (`10.0.1.0/24`) and `r2` (`10.0.3.0/24`).
      - `r2`: Forward packets between `r1` (`10.0.3.0/24`) and `h2` (`10.0.2.0/24`).
 
-## Load flow rules
+### Compile P4
+```bash
+p4c-bm2-ss --std p4-16  p4/l3switch.p4 -o json/l3switch.json
+```
+
+### Run
+```bash
+sudo python3 mininet/task2-topo.py --json json/l3switch.json
+```
+
+### Load flow rules
 ```bash
 simple_switch_CLI --thrift-port <r1_port> < flows/r1_flows.txt
 simple_switch_CLI --thrift-port <r2_port> < flows/r2_flows.txt
 ```
 
-## Test
-- mininet> h1 ping h2 -c 5
+### Test
+```bash
+mininet> h1 ping h2 -c 5
+```
 
 ## Debugging Tips
 
