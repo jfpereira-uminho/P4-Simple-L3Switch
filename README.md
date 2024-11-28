@@ -11,12 +11,12 @@ In this task, you will extend the existing Mininet topology from a single-router
 
 ### Network Configuration
 
-| Device    | Interface  | IP Address       | MAC Address            |
+| Device    | Interface   | IP Address       | MAC Address            |
 |-----------|-------------|------------------|------------------------|
 | **h1**    | `h1-eth0`   | `10.0.1.1/24`    | `00:04:00:00:00:01`    |
 | **r1**    | `r1-eth1`   | `10.0.1.254/24`  | `aa:00:00:00:00:01`    |
-|           | `r1-eth2`   | `10.0.3.254/24`  | `aa:00:00:00:00:03`    |
-| **r2**    | `r2-eth1`   | `10.0.3.253/24`  | `bb:00:00:00:00:01`    |
+|           | `r1-eth2`   | `10.0.3.1/30`    | `aa:00:00:00:00:02`    |
+| **r2**    | `r2-eth1`   | `10.0.3.2/30`    | `bb:00:00:00:00:01`    |
 |           | `r2-eth2`   | `10.0.2.254/24`  | `bb:00:00:00:00:02`    |
 | **h2**    | `h2-eth0`   | `10.0.2.1/24`    | `00:04:00:00:00:02`    |
 
