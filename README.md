@@ -39,7 +39,6 @@ In this task, you will extend the existing Mininet topology from a single-router
 ## Test
 - mininet> h1 ping h2 -c 5
 
-## Debbugin
 ## Debugging Tips
 
 Here are some useful commands to help troubleshoot and verify your topology:
