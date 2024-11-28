@@ -33,8 +33,10 @@ In this task, you will extend the existing Mininet topology from a single-router
      - `r2`: Forward packets between `r1` (`10.0.3.0/24`) and `h2` (`10.0.2.0/24`).
 
 ## Load flow rules
-- simple_switch_CLI --thrift-port <r1_port> < flows/r1_flows.txt
-- simple_switch_CLI --thrift-port <r2_port> < flows/r2_flows.txt
+```bash
+simple_switch_CLI --thrift-port <r1_port> < flows/r1_flows.txt
+simple_switch_CLI --thrift-port <r2_port> < flows/r2_flows.txt
+```
 
 ## Test
 - mininet> h1 ping h2 -c 5
