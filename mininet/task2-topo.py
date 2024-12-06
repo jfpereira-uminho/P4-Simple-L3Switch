@@ -59,11 +59,6 @@ parser.add_argument('--json', help='Path to JSON config file',
 
 args = parser.parse_args()
 
-sw_mac_base = "aa:00:00:00:00:%02x"
-host_mac_base = "00:04:00:00:00:%02x"
-
-host_ip_base =  "10.0.%d.1/24"
-sw_ip_base = "10.0.%d.254"
 
 
 class SingleSwitchTopo(Topo):
@@ -71,19 +66,25 @@ class SingleSwitchTopo(Topo):
         # Initialize topology and default options
         Topo.__init__(self, **opts)
         # adding a P4Switch
-        switch = self.addSwitch('r1',
+        r1 = self.addSwitch('r1',
                                 sw_path = sw_path,
                                 json_path = json_path,
                                 thrift_port = thrift_port)
         
+        r2 = self.addSwitch('r2',
+                                sw_path = sw_path,
+                                json_path = json_path,
+                                thrift_port = thrift_port+1)
+        
         # adding host and link with the right mac and ip addrs
         # declaring a link: addr2=sw_mac gives a mac to the switch port
-        for h in range(n):
-            host = self.addHost('h%d' % (h + 1),
-                                ip = host_ip_base % (h + 1),
-                                mac = host_mac_base % (h + 1))
-            sw_mac = sw_mac_base % (h + 1)
-            self.addLink(host, switch, addr2=sw_mac)
+        h1 = self.addHost('h1', ip="10.0.1.1/24", mac="00:04:00:00:00:01")
+        h2 = self.addHost('h2', ip="10.0.2.1/24", mac="00:04:00:00:00:02")
+
+        self.addLink(h1, r1, port2=1, addr2="aa:00:00:00:01:01")
+        self.addLink(h2, r2, port2=2, addr2="aa:00:00:00:02:02")
+
+        self.addLink(r1, r2, port1=2, port2=1, addr1="aa:00:00:00:01:02", addr2="aa:00:00:00:02:01")
 
 def main():
     num_hosts = args.num_hosts
@@ -104,20 +105,18 @@ def main():
     # with the arguments passed to the SingleSwitchTopo class in order to create 
     # our software switch.
     net.start()
-
-    # an array of the mac addrs from the switch
-    sw_mac = [sw_mac_base % (n + 1) for n in range(num_hosts)]
-    # an array of the ip addrs from the switch 
-    # they are only used to define defaultRoutes on hosts 
-    sw_addr = [sw_ip_base % (n + 1) for n in range(num_hosts)]
-
-    for n in range(num_hosts):
-        h = net.get('h%d' % (n + 1))
-        h.describe()
-        h.setARP(sw_addr[n], sw_mac[n])
-        h.setDefaultRoute("dev eth0 via %s" % sw_addr[n])
-
+    
     sleep(1)  # time for the host and switch confs to take effect
+
+    h1 = net.get('h1')
+    h1.setARP("10.0.1.254", "aa:00:00:00:01:01")
+    h1.setDefaultRoute("dev eth0 via 10.0.1.254")
+
+    h2 = net.get('h2')
+    h2.setARP("10.0.2.254", "aa:00:00:00:02:02")
+    h2.setDefaultRoute("dev eth0 via 10.0.2.254")
+
+    
 
     print("Ready !")
 
