@@ -42,8 +42,8 @@ sudo python3 mininet/task2-topo.py --json json/l3switch.json
 
 ### Load flow rules
 ```bash
-simple_switch_CLI --thrift-port <r1_port> < flows/r1_flows.txt
-simple_switch_CLI --thrift-port <r2_port> < flows/r2_flows.txt
+simple_switch_CLI --thrift-port 9090 < flows/r1_flows.txt
+simple_switch_CLI --thrift-port 9091 < flows/r2_flows.txt
 ```
 
 ### Test
