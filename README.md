@@ -1,4 +1,4 @@
-# GVR: Task 2 - Extending the Topology
+# Task - Extending the Topology
 
 ## Task Overview
 In this task, you will extend the existing Mininet topology from a single-router setup (`h1-r1-h2`) to a two-router topology (`h1-r1-r2-h2`). Your objective is to adapt the flow rules for the two routers, ensuring correct packet forwarding between the hosts.
@@ -70,7 +70,7 @@ Here are some useful commands to help troubleshoot and verify your topology:
    - **Usage:** Display the state and configuration of network interfaces for each host or router.
    - Example:
      ```bash
-     mininet> r1 ip link
+     mininet> s1 ip link
      ```
 
 ### 4. **P4 Runtime Client for Monitoring**
